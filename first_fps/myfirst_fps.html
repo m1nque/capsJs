@@ -1,29 +1,53 @@
-<html>
+﻿<html>
  <head>
   <script type="text/javascript">
-function summonZombie(){  
+var intervalId ;
+  
+function summonZombie()
+{  
    //var zombie = document.createElement('div'); //create an image DOM object.
    var zombie = document.createElement('img'); //create an image DOM object.
-   with(zombie){
-    src="./imgs/lady_zombie.gif"; //set image source
-    style.backgroundColor="black";
-    style.height="50%";
-    onclick = function(e){
-     var currObj = e.currentTarget;
-     alert('끄어어어');
-     currObj.remove();
-     var score = document.getElementById("fps-score-span");
-     
-     if(score != null) 
-      score.innerHTML = parseInt(score.innerHTML)+1;
-     else 
-      alert('A zombie died');
-    }
-   }
+   with(zombie)
+	{
+		src="./imgs/lady_zombie.gif"; //set image source
+		with(style)
+		{
+			//style.backgroundColor="black";
+			height="50%";
+		}
+		 onclick = function(e)		// 클릭 시 발생 이벤트
+		{			// anonymous function
+			 var currObj = e.currentTarget;
+			 //alert('끄어어어');
+			 currObj.remove();
+			 var score = document.getElementById("fps-score-span");
+			 
+			 if(parseInt(score.innerHTML) + 1 >= 15)
+			{
+				score.innerHTML = parseInt(score.innerHTML) + 1;
+				alert('Victory!!');
+				clearInterval(intervalId);
+			}
+			 else if(score != null) 
+				score.innerHTML = parseInt(score.innerHTML) + 1;
+			 else 
+				alert('A zombie died');
+		}
+	}
 
    var screen = document.getElementById("fps-disp-div");
    screen.appendChild(zombie);
 
+}
+
+window.onload=function()	// windows - 현재 화면  / onload - 로드 끝 / function - 익명 함수
+{
+	//Code here!
+	//setTimeout		// 시간만큼 실행	
+	intervalId = window.setInterval(summonZombie, Math.random() * 2000);			// 시간마다 실행 = 일정시간 주기로 좀비가 화면에 나타나게!!!
+															// 함수를 인자로 넘길 때는 함수 이름만 넣음
+															// 또는 익명함수를 생성 후 넘김 setinterval ( function() { summonZombie(); } )
+	//example,  window.setInterval(.....);
 }
   </script>
  </head>
@@ -33,9 +57,4 @@ function summonZombie(){
   <div id="fps-disp-div" style="width:1024px;height:768px;background-image:url('./imgs/horror_bg.jpg');">
   </div>
  </body>
-window.onload=function(){
-	//Code here!
-	//example,  window.setInterval(.....);
-	
-}
 </html>
