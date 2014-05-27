@@ -1,0 +1,36 @@
+<html>
+ <head>
+  <script type="text/javascript">
+function summonZombie(){  
+   //var zombie = document.createElement('div'); //create an image DOM object.
+   var zombie = document.createElement('img'); //create an image DOM object.
+   with(zombie){
+    src="./imgs/lady_zombie.gif"; //set image source
+    style.backgroundColor="black";
+    style.height="50%";
+    onclick = function(e){
+     var currObj = e.currentTarget;
+     alert('끄어어어');
+     currObj.remove();
+     var score = document.getElementById("fps-score-span");
+     
+     if(score != null) 
+      score.innerHTML = parseInt(score.innerHTML)+1;
+     else 
+      alert('A zombie died');
+    }
+   }
+
+   var screen = document.getElementById("fps-disp-div");
+   screen.appendChild(zombie);
+
+}
+  </script>
+ </head>
+ <body>
+  <input type="button" onclick="summonZombie();" value="Summon Zombie!!">
+  <span id="fps-score-span">0</span>점
+  <div id="fps-disp-div" style="width:1024px;height:768px;background-image:url('./imgs/horror_bg.jpg');">
+  </div>
+ </body>
+</html>
