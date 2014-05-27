@@ -1,29 +1,38 @@
-<html>
+﻿<html>
  <head>
   <script type="text/javascript">
+  var intervalID;
 function summonZombie(){  
    //var zombie = document.createElement('div'); //create an image DOM object.
    var zombie = document.createElement('img'); //create an image DOM object.
    with(zombie){
     src="./imgs/lady_zombie.gif"; //set image source
-    style.backgroundColor="black";
-    style.height="50%";
-    onclick = function(e){
+    with(style){
+	backgroundColor="green";
+    height="50%";
+	}
+
+    onclick = function(e){ //익명함수(anonymous function)
      var currObj = e.currentTarget;
      alert('끄어어어');
      currObj.remove();
      var score = document.getElementById("fps-score-span");
      
-     if(score != null) 
+     if(score != null){ 
       score.innerHTML = parseInt(score.innerHTML)+1;
-     else 
+	  if(parseInt(score.innerHTML) > 5){
+	  alert('승리했땅');
+	  window.clearInterval(intervalID);
+	  }
+	 }
+	 
+	 else 
       alert('A zombie died');
     }
    }
 
    var screen = document.getElementById("fps-disp-div");
    screen.appendChild(zombie);
-
 }
   </script>
  </head>
@@ -33,9 +42,9 @@ function summonZombie(){
   <div id="fps-disp-div" style="width:1024px;height:768px;background-image:url('./imgs/horror_bg.jpg');">
   </div>
  </body>
-window.onload=function(){
-	//Code here!
-	//example,  window.setInterval(.....);
-	
+ <script>
+window.onload=function(){	
+	 intervalID = window.setInterval(summonZombie, 500);
 }
+</script>
 </html>
