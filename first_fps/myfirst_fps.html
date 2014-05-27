@@ -1,21 +1,29 @@
-<html>
+﻿<html>
  <head>
   <script type="text/javascript">
+ var intervalId ;
 function summonZombie(){  
    //var zombie = document.createElement('div'); //create an image DOM object.
    var zombie = document.createElement('img'); //create an image DOM object.
    with(zombie){
     src="./imgs/lady_zombie.gif"; //set image source
-    style.backgroundColor="black";
-    style.height="50%";
-    onclick = function(e){
+	with(style){
+		backgroundColor="black";
+		height="50%";
+	}
+    onclick = function(e){ //anonymous function (익명 함수)
      var currObj = e.currentTarget;
      alert('끄어어어');
      currObj.remove();
      var score = document.getElementById("fps-score-span");
      
-     if(score != null) 
+     if(score != null) {
       score.innerHTML = parseInt(score.innerHTML)+1;
+	  if( parseInt(score.innerHTML) > 15 ){
+		alert("승리하였습니다!");
+		clearInterval(intervalId );
+	  }
+	 }
      else 
       alert('A zombie died');
     }
@@ -28,14 +36,16 @@ function summonZombie(){
   </script>
  </head>
  <body>
-  <input type="button" onclick="summonZombie();" value="Summon Zombie!!">
+  <!--input type="button" onclick="summonZombie();" value="Summon Zombie!!"-->
   <span id="fps-score-span">0</span>점
   <div id="fps-disp-div" style="width:1024px;height:768px;background-image:url('./imgs/horror_bg.jpg');">
   </div>
  </body>
+<script type='text/javascript'>
 window.onload=function(){
 	//Code here!
 	//example,  window.setInterval(.....);
-	
+	intervalId = window.setInterval(summonZombie, 1000);
 }
+</script>
 </html>
