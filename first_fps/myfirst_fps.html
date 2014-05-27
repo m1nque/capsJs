@@ -1,21 +1,31 @@
-<html>
+﻿<html>
  <head>
   <script type="text/javascript">
+  var hj;
 function summonZombie(){  
    //var zombie = document.createElement('div'); //create an image DOM object.
    var zombie = document.createElement('img'); //create an image DOM object.
-   with(zombie){
+   with(zombie){ 
     src="./imgs/lady_zombie.gif"; //set image source
-    style.backgroundColor="black";
-    style.height="50%";
-    onclick = function(e){
+    with(style){
+	backgroundColor="black";
+    height="50%";
+    }
+	onclick = function(e){ //(익명함수) anomymous function
      var currObj = e.currentTarget;
      alert('끄어어어');
      currObj.remove();
      var score = document.getElementById("fps-score-span");
      
-     if(score != null) 
+     if(score != null) {
       score.innerHTML = parseInt(score.innerHTML)+1;
+	  if(parseInt(score.innerHTML) > 15){
+		alert('승리하였습니다.');
+		alert(hj);
+		
+		clearInterval(hj);
+	  }
+	  }
      else 
       alert('A zombie died');
     }
@@ -25,6 +35,12 @@ function summonZombie(){
    screen.appendChild(zombie);
 
 }
+
+window.onload = function start(){ //window는 현재탭을 말함.
+	
+	hj = window.setInterval(function(){summonZombie()}, 1000);
+	alert(hj);
+}
   </script>
  </head>
  <body>
@@ -33,9 +49,4 @@ function summonZombie(){
   <div id="fps-disp-div" style="width:1024px;height:768px;background-image:url('./imgs/horror_bg.jpg');">
   </div>
  </body>
-window.onload=function(){
-	//Code here!
-	//example,  window.setInterval(.....);
-	
-}
 </html>
