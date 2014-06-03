@@ -1,13 +1,44 @@
 ﻿<html>
  <head>
   <script type="text/javascript">
-var intervalId ;
+  /*	NOTE
+  thread : 실, 가닥
+  한번에 여러개 실행
+  settimeout 쓰면 자동으로 멀티스레딩 (계속 돌아감)
   
+  재귀용법 (recursive)
+  1. 탈출조건!
+  
+  시스템이 오브젝트를 어떻게 제어하느냐
+  1. 배열 써서 생성될 때마다 오브젝트 집어넣음
+  2. html을 사용
+  
+  배열 
+  int arr[] = { .... };	// C언어
+  var arr = [ ... ];		// 자바
+  .shift : 맨 앞 삭제
+  .unshift : 맨 앞에 삽입
+  .push : 맨 마지막에 삽입
+  .splice(index, 지울개수, 삽입할거 이름...) : 사이에 대체..
+  delete arr[i] : i 번째는 undefined, length 변화 없다.
+  .pop : 마지막 인덱스 삭제, length 변함
+  */
+  
+var intervalId ;
+var zombieArray = [] ;
+
 function summonZombie()
 {  
-   //var zombie = document.createElement('div'); //create an image DOM object.
-   var zombie = document.createElement('img'); //create an image DOM object.
-   with(zombie)
+	var score = document.getElementById("fps-score-span");
+	
+	if(parseInt(score.innerHTML) < 15)
+		window.setTimeout(summonZombie, Math.random() * 3120);
+	//var zombie = document.createElement('div'); //create an image DOM object.
+	var zombie = document.createElement('img'); //create an image DOM object.
+	
+	zombieArray[zombieArray.length] = zombie;
+	// zombieArray.push	
+	with(zombie)
 	{
 		src="./imgs/lady_zombie.gif"; //set image source
 		with(style)
@@ -20,13 +51,13 @@ function summonZombie()
 			 var currObj = e.currentTarget;
 			 //alert('끄어어어');
 			 currObj.remove();
-			 var score = document.getElementById("fps-score-span");
 			 
 			 if(parseInt(score.innerHTML) + 1 >= 15)
 			{
 				score.innerHTML = parseInt(score.innerHTML) + 1;
 				alert('Victory!!');
-				clearInterval(intervalId);
+				alert("The Zombies on the screen are " + (zombieArray.length - score.innerHTML) );
+				//clearInterval(intervalId);
 			}
 			 else if(score != null) 
 				score.innerHTML = parseInt(score.innerHTML) + 1;
@@ -43,17 +74,18 @@ function summonZombie()
 window.onload=function()	// windows - 현재 화면  / onload - 로드 끝 / function - 익명 함수
 {
 	//Code here!
-	//setTimeout		// 시간만큼 실행	
-	intervalId = window.setInterval(summonZombie, Math.random() * 2000);			// 시간마다 실행 = 일정시간 주기로 좀비가 화면에 나타나게!!!
+	//setTimeout		// 시간만큼 실행
+	//intervalId = window.setInterval(function(){setTimeout(summonZombie, (Math.random() * 10000 % 100 + 45) * 90); }  , 160);			// 시간마다 실행 = 일정시간 주기로 좀비가 화면에 나타나게!!!
 															// 함수를 인자로 넘길 때는 함수 이름만 넣음
 															// 또는 익명함수를 생성 후 넘김 setinterval ( function() { summonZombie(); } )
 	//example,  window.setInterval(.....);
+	setTimeout(summonZombie, 1500);
 }
   </script>
  </head>
  <body>
   <input type="button" onclick="summonZombie();" value="Summon Zombie!!">
-  <span id="fps-score-span">0</span>점
+  <span id="fps-score-span">0</span> points
   <div id="fps-disp-div" style="width:1024px;height:768px;background-image:url('./imgs/horror_bg.jpg');">
   </div>
  </body>
